@@ -1,0 +1,8 @@
+{
+  "build": {
+    "env": {
+      "PINTEREST_APP_SECRET": "@pinterest_app_secret",
+      "PINTEREST_APP_ID": "@pinterest_app_id"
+    }
+  }
+}
