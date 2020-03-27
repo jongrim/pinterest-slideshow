@@ -1,20 +1,23 @@
-import axios from 'axios';
+import React from "react";
+import axios from "axios";
+import { AuthContext } from "./_app";
 
-const OAuth = ({ accessToken }) => {
-  if (accessToken) {
-    console.log(accessToken);
-    if (sessionStorage) {
-      console.log('session storage available');
-      sessionStorage.setItem('pinterestAccessToken', accessToken);
+const OAuth = ({ loadedToken }) => {
+  const { accessToken, setAccessToken } = React.useContext(AuthContext);
+  React.useEffect(() => {
+    if (loadedToken) {
+      setAccessToken(loadedToken);
     }
+  }, [loadedToken]);
+  if (accessToken) {
     return <div>You are now signed in</div>;
   }
   return <div>You are not signed in</div>;
 };
 
 export async function getServerSideProps(context) {
-  const { query: { code = '' } = {} } = context;
-  let accessToken = '';
+  const { query: { code = "" } = {} } = context;
+  let accessToken = "";
   if (code) {
     const res = await axios
       .post(
@@ -27,7 +30,7 @@ export async function getServerSideProps(context) {
       accessToken = res.data;
     }
   }
-  return { props: { accessToken } };
+  return { props: { loadedToken: accessToken } };
 }
 
 export default OAuth;
