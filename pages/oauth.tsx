@@ -1,8 +1,12 @@
 import axios from 'axios';
 
 const OAuth = ({ accessToken }) => {
-  if (accessToken && window) {
-    sessionStorage.setItem('pinterestAccessToken', accessToken);
+  if (accessToken) {
+    console.log(accessToken);
+    if (sessionStorage) {
+      console.log('session storage available');
+      sessionStorage.setItem('pinterestAccessToken', accessToken);
+    }
     return <div>You are now signed in</div>;
   }
   return <div>You are not signed in</div>;
