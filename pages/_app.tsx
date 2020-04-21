@@ -1,4 +1,9 @@
-import React from "react";
+import * as React from "react";
+import "@reach/menu-button/styles.css";
+
+import useLocalStorage from "../hooks/useLocalStorage";
+
+import "../styles/App.css";
 
 interface AuthContext {
   accessToken?: string;
@@ -8,7 +13,10 @@ interface AuthContext {
 export const AuthContext = React.createContext<AuthContext>({});
 
 function App({ Component, pageProps }) {
-  const [accessToken, setAccessToken] = React.useState("");
+  const [accessToken, setAccessToken] = useLocalStorage<string>(
+    "accessToken",
+    ""
+  );
   return (
     <AuthContext.Provider value={{ accessToken, setAccessToken }}>
       <Component {...pageProps} />

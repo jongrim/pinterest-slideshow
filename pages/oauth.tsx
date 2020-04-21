@@ -28,6 +28,7 @@ export async function getServerSideProps(context) {
       });
     if (res) {
       accessToken = res.data;
+      console.log(accessToken);
     }
   }
   return { props: { loadedToken: accessToken } };
