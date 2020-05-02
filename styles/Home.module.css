@@ -1,0 +1,64 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.title {
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+}
+
+.boardLabel {
+  font-size: 1.4rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.inputContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.boardInput {
+  display: block;
+  width: 40vw;
+  min-width: 200px;
+  border-radius: 12px;
+  padding: 0.25rem 1rem;
+  margin: 1rem 0;
+  font-size: 1.5rem;
+  border: none;
+}
+
+.goButton {
+  text-decoration: none;
+  background-color: #bb342f;
+  padding: 0.34rem 1rem;
+  border-radius: 12px;
+  box-shadow: 0 2.8px 2.2px rgba(0, 0, 0, 0.02),
+    0 6.7px 5.3px rgba(0, 0, 0, 0.028), 0 12.5px 10px rgba(0, 0, 0, 0.035),
+    0 22.3px 17.9px rgba(0, 0, 0, 0.042), 0 41.8px 33.4px rgba(0, 0, 0, 0.05),
+    0 100px 80px rgba(0, 0, 0, 0.07);
+  color: white;
+  font-size: 2rem;
+}
+
+.signInSection {
+  padding-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 1.2rem;
+}
+
+.signIn {
+  font-size: 1.4rem;
+  line-height: 1.8rem;
+  color: #bb342f;
+}
