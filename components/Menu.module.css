@@ -1,6 +1,6 @@
 .menuIcon {
   position: absolute;
-  bottom: 40px;
+  top: 40px;
   right: 35px;
   cursor: pointer;
   background: transparent;
@@ -11,9 +11,9 @@
 
 .popover {
   position: absolute;
-  bottom: 0;
-  width: 100%;
-  height: 100px;
+  right: 0;
+  width: 200px;
+  height: 100%;
   z-index: 1;
   display: flex;
   justify-content: space-around;
@@ -44,13 +44,12 @@
     0 -13.4px 17.9px rgba(0, 0, 0, 0.042), 0 -25.1px 33.4px rgba(0, 0, 0, 0.05),
     0 -60px 80px rgba(0, 0, 0, 0.07);
   transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
-  transition-property: opacity, bottom;
+  transition-property: opacity, right;
 }
 
 .popover[hidden] {
   transition-delay: 0s;
   opacity: 0;
-  bottom: -100px;
 }
 
 .playbackSpeed {

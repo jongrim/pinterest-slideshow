@@ -2,33 +2,47 @@ import * as React from "react";
 import styles from "../styles/Play.module.css";
 import Menu from "../components/Menu";
 
-interface Image {
-  url: string;
-}
+import axios from "axios";
+
 interface PlayerProps {
-  images: Image[];
+  images?: string[];
+  xml?: string;
 }
 
-const devImages = [
-  "https://i.pinimg.com/originals/f7/6f/aa/f76faaf4aad8318b32c0846f6f45d88b.jpg",
-  "https://i.pinimg.com/originals/64/6c/3a/646c3adfc6d046d81f73d2dd5129bceb.jpg",
-  "https://i.pinimg.com/originals/13/f5/88/13f5884258bfbf882398d8285b38dfd2.jpg",
-];
-
-const Player: React.FC<PlayerProps> = ({ images }) => {
+const Player: React.FC<PlayerProps> = ({ images, xml }) => {
+  const [xmlImages, setXmlImages] = React.useState<string[]>(null);
   const [activeIndex, setActiveIndex] = React.useState(0);
   const [playbackSpeed, setPlaybackSpeed] = React.useState("30000");
+
+  React.useEffect(() => {
+    if (xml) {
+      const doc = new DOMParser().parseFromString(xml, "text/xml");
+      const descriptions = Array.from(doc.querySelectorAll("description"));
+      const imageLinks = descriptions
+        .map((d) => d.innerHTML)
+        .filter(Boolean)
+        .map((t) => {
+          const r = new RegExp(/src="(.+)"/gm);
+          return r.exec(t)[1];
+        })
+        .map((l) => l.replace("236x", "640x"));
+      setXmlImages(imageLinks);
+    }
+  }, [xml]);
+
+  const displayImages = xmlImages || images || [];
+
   React.useEffect(() => {
     const timer = setInterval(() => {
-      setActiveIndex((val) => (val + 1) % devImages.length);
+      setActiveIndex((val) => (val + 1) % displayImages.length);
     }, parseInt(playbackSpeed, 10));
     return () => window.clearInterval(timer);
-  }, [playbackSpeed]);
+  }, [displayImages, playbackSpeed]);
 
   return (
     <div className={styles.page}>
       <div className={styles.player}>
-        {devImages.map((image, i) => (
+        {displayImages.map((image, i) => (
           <img
             src={image}
             key={image}
@@ -41,5 +55,22 @@ const Player: React.FC<PlayerProps> = ({ images }) => {
     </div>
   );
 };
+
+export async function getServerSideProps(context) {
+  const { query } = context;
+  if (query.board) {
+    try {
+      const res = await axios.get(query.board);
+      const text = res.data;
+      return {
+        props: { xml: text },
+      };
+    } catch (e) {
+      console.log(e);
+      return { props: { error: "Board not found" } };
+    }
+  }
+  return { props: {} };
+}
 
 export default Player;
